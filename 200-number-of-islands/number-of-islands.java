@@ -1,0 +1,59 @@
+class Solution {
+
+    int[] drow = {-1, 0, 1, 0};
+    int[] dcol = {0, 1, 0, -1};
+    public int numIslands(char[][] grid) {
+
+        int n = grid.length;
+        int m = grid[0].length;
+        int[][] vis = new int [n][m];
+        int cnt =0;
+        for(int row = 0 ; row < n;row++){
+            for(int col = 0 ; col<m ;col++){
+
+                if(vis[row][col] == 0 && grid[row][col] == '1'){
+                    cnt++;
+                    bfs(row,col,vis,grid);
+                }
+            }
+        }
+        return cnt;
+    }
+
+    private void bfs(int r, int c, int[][]vis, char[][]grid){
+        vis[r][c] = 1;
+        Queue<Pair> q = new LinkedList<Pair>();
+        q.add(new Pair(r,c));
+        int n = grid.length;
+        int m = grid[0].length;
+
+        while(!q.isEmpty()){
+            int row = q.peek().first;
+            int col = q.peek().second;
+            q.remove();
+
+            for(int i = 0; i< 4 ; i++ ){
+                // for(int dcol = -1 ; dcol <= 1 ; dcol++){
+                    int  nrow = row + drow[i];
+                    int  ncol = col + dcol[i];
+                    if(nrow < n && nrow>=0 && ncol <m && ncol>=0 && grid[nrow][ncol] == '1' && vis[nrow][ncol] == 0){
+                        q.add(new Pair(nrow,ncol));
+                        vis[nrow][ncol] = 1;
+                    }
+
+                // }
+            }
+
+        }
+    }
+}
+
+class Pair{
+
+    int first;
+    int second;
+    Pair(int first,int second){
+        this.first = first;
+        this.second = second;
+    }
+}
