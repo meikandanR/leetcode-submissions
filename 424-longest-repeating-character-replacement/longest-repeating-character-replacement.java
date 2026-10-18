@@ -13,7 +13,7 @@ class Solution {
 
             if(changes>k){
                 hash[s.charAt(l)-'A']--;
-                maxfreq = 0;
+                // maxfreq = 0;
                 l++;
             }
             if(changes <=k){
