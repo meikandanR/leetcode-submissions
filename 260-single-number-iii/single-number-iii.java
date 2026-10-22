@@ -13,9 +13,6 @@ class Solution {
                 i++;
                 ind++;
             }
-            if(ind == 2){
-                break;
-            }
         }
         return ans;
         
