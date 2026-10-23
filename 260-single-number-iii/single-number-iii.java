@@ -1,20 +1,23 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        Arrays.sort(nums);
+
         int n = nums.length;
-        int ind = 0 ;
-        int ans[] = new int[2];
-        int i = 0 ;
-        while(i<n){
-            if(i+1 < n && nums[i] == nums[i+1]){
-                i+=2;
+        int xor = 0 ;
+        for(int i=0;i<n;i++){
+            xor = xor^nums[i];
+        }
+
+        int rightmost = xor & (-xor);
+        // int rightmost = xor & (-xor);
+        int b1 = 0 ;
+        int b2 = 0 ;
+        for(int i =0 ;i < n ; i ++){
+            if((rightmost & nums[i]) ==0){
+                b1= b1^nums[i];
             }else{
-                ans[ind] = nums[i];
-                i++;
-                ind++;
+                b2 = b2^nums[i];
             }
         }
-        return ans;
-        
+        return new int[]{b1,b2};
     }
 }
