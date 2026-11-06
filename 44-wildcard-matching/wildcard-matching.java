@@ -3,8 +3,8 @@ class Solution {
         int m = s.length();
         int n = p.length();
         Boolean[][] dp = new Boolean[n][m];
-
-        return solve(n-1,m-1,p,s,dp);
+        return tabulation(s, p, m, n);
+        // return solve(n-1,m-1,p,s,dp);
     }
 
     private boolean solve(int i,int j, String p, String s,Boolean[][] dp){
@@ -33,5 +33,50 @@ class Solution {
         return false;
     }
 
+    private boolean tabulation(String s, String p, int m, int n) {
+
+        boolean[][] dp = new boolean[n + 1][m + 1];
+
+        // Base case
+        dp[0][0] = true;
+
+        // Pattern is empty, string is not empty
+        for (int j = 1; j <= m; j++) {
+            dp[0][j] = false;
+        }
+
+        // String is empty, pattern may contain only '*'
+        for (int i = 1; i <= n; i++) {
+            if (p.charAt(i - 1) == '*') {
+                dp[i][0] = dp[i - 1][0];
+            } else {
+                dp[i][0] = false;
+            }
+        }
+
+        // Nested loops
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+
+                if (p.charAt(i - 1) == s.charAt(j - 1) ||
+                    p.charAt(i - 1) == '?') {
+
+                    dp[i][j] = dp[i - 1][j - 1];
+
+                } else if (p.charAt(i - 1) == '*') {
+
+                    dp[i][j] = dp[i][j - 1] || dp[i - 1][j];
+
+                } else {
+
+                    dp[i][j] = false;
+                }
+            }
+        }
+
+        return dp[n][m];
+    }
+
 
 }
+
