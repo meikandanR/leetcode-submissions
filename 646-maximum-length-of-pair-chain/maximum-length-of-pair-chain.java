@@ -1,21 +1,23 @@
 class Solution {
-    public int findLongestChain(int[][] pairs) {
+
+    // Dp solving
+    // public int findLongestChain(int[][] pairs) {
 
 
-        int n = pairs.length;
+    //     int n = pairs.length;
 
-        Arrays.sort(pairs,(a,b)->{
-            return a[0] - b[0];
-        });
-        for(int[] row :pairs){
-            System.out.println(Arrays.toString(row));
-        }
-        int[][] dp = new int[n][n+1];
-        for(int[] row:dp){
-            Arrays.fill(row,-1);
-        }
-        return solve(0,-1,n,pairs,dp);
-    }
+    //     Arrays.sort(pairs,(a,b)->{
+    //         return a[0] - b[0];
+    //     });
+    //     // for(int[] row :pairs){
+    //     //     System.out.println(Arrays.toString(row));
+    //     // }
+    //     int[][] dp = new int[n][n+1];
+    //     for(int[] row:dp){
+    //         Arrays.fill(row,-1);
+    //     }
+    //     return solve(0,-1,n,pairs,dp);
+    // }
 
     private int solve(int i,int previ, int n, int[][]pairs,int[][]dp){
 
@@ -28,5 +30,33 @@ class Solution {
         }
         return dp[i][previ+1] = Math.max(pick,notPick);
 
+    }
+
+
+    public int findLongestChain(int[][] pairs) {
+
+
+        int n = pairs.length;
+
+        Arrays.sort(pairs,(a,b)->{
+            return a[1] - b[1];
+        });
+        for(int[] row :pairs){
+            System.out.println(Arrays.toString(row));
+        }
+
+        int count =1;
+        int prev_end = pairs[0][1];
+
+        for(int i=1;i<n;i++){
+
+            if(prev_end < pairs[i][0]){
+                count++;
+                prev_end = pairs[i][1];
+            }
+
+        }
+
+        return count;
     }
 }
