@@ -10,7 +10,7 @@ class Solution {
                 count0s++;
             }
 
-            if (count0s > k) {
+            while (count0s > k) {
                 if (nums[left] == 0) {
                     count0s--;
                 }
